@@ -45,11 +45,9 @@ The frontend calls the API on the same origin using relative paths (`/api/...`),
 - Next.js 15 (App Router, static export)
 - React 18 + TypeScript
 - Tailwind CSS
-- Framer Motion
-- Recharts
-- Hono + Cloudflare Workers (API + static assets)
+- Hono (API on Cloudflare Workers)
 - Vitest (testing)
-- Cloudflare Workers KV (session storage)
+- Cloudflare Workers Assets (static frontend), KV (session storage), and D1 (durable storage)
 
 ## Project Structure
 
@@ -57,15 +55,16 @@ The frontend calls the API on the same origin using relative paths (`/api/...`),
 next-gen-skillforge/
 ├── app/                 # Next.js frontend (App Router, static export)
 │   ├── page.tsx         # Landing page
-│   ├── layout.tsx       # Root layout (sidebar, theme, toasts)
-│   ├── dashboard/       # Dashboard (stats, quick actions, saved analysis)
-│   ├── profile/         # Profile setup (links, resume upload)
-│   ├── analysis/        # Skill/job analysis (summary, charts, recommendations)
-│   ├── learning/        # Personalized learning path
-│   └── report/          # Downloadable PDF report
+│   ├── layout.tsx       # Root layout (theme and toasts)
+│   └── (app)/           # Pages sharing the sidebar layout
+│       ├── layout.tsx   # App shell with sidebar
+│       ├── dashboard/   # Dashboard (stats, quick actions, saved analysis)
+│       ├── profile/     # Profile setup (links, resume upload)
+│       ├── analysis/    # Skill/job analysis (summary and recommendations)
+│       ├── learning/    # Personalized learning path
+│       └── report/      # Downloadable PDF report
 ├── components/          # React components
 │   ├── layout/          # App shell (sidebar navigation)
-│   ├── sections/        # Landing page sections
 │   └── ui/              # UI kit (buttons, cards, toasts, skeletons, ...)
 ├── lib/                 # Shared libraries
 │   ├── api-client.ts    # Fetch-based API client (same-origin /api calls)
